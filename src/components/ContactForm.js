@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const ContactForm = () => {
-	const [data, setData] = useState();
+  const [data, setData] = useState();
+  const [post, setPost] = useState();
 	const { register, errors, handleSubmit } = useForm({
 		mode: "onBlur",
 	});
+
 	const onSubmit = data => {
 		setData(data);
+
+		console.log(data);
+
+		axios
+			.post(`https://reqres.in/api/users`, data)
+			.then(response => {
+        setPost(response.data);
+			})
+			.catch(err => {
+				console.log(err);
+      });
+      
 	};
 
 	return (
@@ -57,8 +72,10 @@ const ContactForm = () => {
 					/>
 				</div>
 				{data && (
-					<pre data-testid="newUser" style={{ textAlign: "left", color: "white" }}>
-						{JSON.stringify(data, null, 2)}
+					<pre
+						data-testid="newUser"
+						style={{ textAlign: "left", color: "white" }}>
+						{JSON.stringify(post, null, 2)}
 					</pre>
 				)}
 				<input type="submit" value="submit" />

@@ -3,7 +3,6 @@ import {
 	render,
 	screen,
 	fireEvent,
-	queryAllByText,
 } from "@testing-library/react";
 import ContactForm from "./ContactForm";
 import { act } from "react-dom/test-utils";
@@ -55,6 +54,4 @@ test("Runs validation", () => {
 	errors.forEach(error => {
 		expect(error).toBeInTheDocument();
     });
-    
-    expect(errors.length === 0).toBeTruthy();
 });
